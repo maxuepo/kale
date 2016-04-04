@@ -13,14 +13,18 @@ class WordCountTest {
   def WordCountTest(): Unit = {
     val lines = Seq("foo bar foo foo bar bar foo bar",
       "there are lots of foos and bars",
-      "foo, bar")
+      "foo bar")
 
     val conf = new SparkConf()
       .setAppName("Spark Example")
       .setMaster("local[2]")
+
     val sparkContext = new SparkContext(conf)
     val input =sparkContext.parallelize(lines)
-    val result: Map[String, Int] = WordCount.countWords(input).collect().toMap;
+
+    lines.foreach(println)
+
+    val result: Map[String, Int] = WordCount.countWords(input).collect().toMap
 
     for (kv <- result) {
       println(kv._1 + " : " + kv._2)
